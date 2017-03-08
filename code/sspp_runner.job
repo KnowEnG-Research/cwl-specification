@@ -1,0 +1,6 @@
+input_file: 
+  class: File
+  location: /mnt/backup/knowdata/datasets/pipeline_spreadsheets/toil/data/Hsap.dream7_c1.G.lg2_probe.pos.df
+output_name: sspp-Hsap.dream7_c1.G.lg2_probe.pos
+spreadsheet_format: genes_x_samples_check
+taxon: "9606"

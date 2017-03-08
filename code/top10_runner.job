@@ -1,0 +1,7 @@
+infile_array:
+- class: File
+  location: /mnt/backup/knowdata/datasets/pipeline_spreadsheets/toil/data/clustering_evaluation_result_Sat_04_Mar_2017_02_44_20.668837070.tsv
+- class: File
+  location: /mnt/backup/knowdata/datasets/pipeline_spreadsheets/toil/data/clustering_evaluation_result_Sat_04_Mar_2017_02_44_21.141702890.tsv
+sort_col: "6"
+exclude_pattern: "_dropna"

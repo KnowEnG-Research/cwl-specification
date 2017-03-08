@@ -1,0 +1,4 @@
+network_type: "Gene"
+taxon: "9606"
+edge_type: "STRING_textmining"
+output_name: "9606.STRING_textmining.edge"

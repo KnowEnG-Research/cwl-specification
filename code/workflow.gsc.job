@@ -1,0 +1,8 @@
+pg_edge_type: kegg_pathway
+genomic_file:
+  class: File
+  location: /mnt/backup/knowdata/datasets/pipeline_spreadsheets/toil/data/all_phenotypes_net_correlation_pearson_Fri_17_Feb_2017_22_31_54.959054231_original.tsv
+gg_network_file:
+  class: File
+  location: /mnt/backup/knowdata/datasets/pipeline_spreadsheets/toil/data/9606.STRING_textmining.edge
+taxon: "9606"

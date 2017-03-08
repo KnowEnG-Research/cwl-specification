@@ -1,0 +1,6 @@
+cluster_map:
+  class: File
+  location: /mnt/backup/knowdata/datasets/pipeline_spreadsheets/toil/data/samples_label_by_cluster_cc_net_nmf_Sat_18_Feb_2017_02_04_54.849793672_viz.tsv
+pheno_file:
+  class: File
+  location: /mnt/backup/knowdata/datasets/pipeline_spreadsheets/toil/data/Hsap.dream7_c1.P.cyto_gi50.pos.c.df

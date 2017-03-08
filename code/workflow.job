@@ -1,0 +1,12 @@
+correlation_method: pearson
+genomic_file:
+  class: File
+  location: /mnt/backup/knowdata/datasets/pipeline_spreadsheets/toil/data/Hsap.dream7_c1.G.lg2_probe.pos.df
+gg_edge_type: STRING_textmining
+taxon: "9606"
+num_bootstraps: 8
+num_clusters_array: [3,4]
+pheno_file:
+  class: File
+  location: /mnt/backup/knowdata/datasets/pipeline_spreadsheets/toil/data/Hsap.dream7_c1.P.cyto_gi50.pos.df
+pg_edge_types: [kegg_pathway, pfam_domains]

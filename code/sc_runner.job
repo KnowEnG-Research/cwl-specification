@@ -1,0 +1,8 @@
+genomic_file:
+  class: File
+  location: /mnt/backup/knowdata/datasets/pipeline_spreadsheets/toil/data/Hsap.dream7_c1.G.lg2_probe.pos.a.df
+network_file:
+  class: File
+  location: /mnt/backup/knowdata/datasets/pipeline_spreadsheets/toil/data/9606.STRING_textmining.edge
+num_bootstraps: 8
+num_clusters: 4
