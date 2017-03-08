@@ -46,9 +46,9 @@ steps:
       - enrichment_scores
 
 outputs:
-  pgkn_fetch.out:
+  pgkn_fetch_out:
     outputSource: pgkn_fetch/output_file
     type: File
-  gsc_drawr.out:
+  gsc_drawr_out:
     outputSource: gsc_drawr/enrichment_scores
     type: File

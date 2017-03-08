@@ -44,9 +44,9 @@ steps:
       - clust_eval_table
 
 outputs:
-  sc.clus_map.out:
+  sc_clus_map_out:
     outputSource: clustering/samples_label_by_cluster_list
     type: File
-  ce.table.out:
+  ce_table_out:
     outputSource: clus_eval/clust_eval_table
     type: File

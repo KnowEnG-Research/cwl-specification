@@ -134,7 +134,7 @@ steps:
       gsc_method:
         valueFrom: "DRaWR"
     out:
-      - gsc_drawr.out
+      - gsc_drawr_out
   clustering_wf:
     run: workflow.sc.cwl
     scatter: num_clusters
@@ -145,12 +145,12 @@ steps:
       genomic_file: clean_g/output_matrix
       pheno_file: clean_p/output_matrix
     out:
-      - sc.clus_map.out
-      - ce.table.out
+      - sc_clus_map_out
+      - ce_table_out
   top10_gather:
     run: top10_runner.cwl
     in:
-      infile_array: clustering_wf/ce.table.out
+      infile_array: clustering_wf/ce_table_out
       sort_col:
         valueFrom: "6"
       exclude_pattern:
@@ -159,42 +159,42 @@ steps:
       - output_file
 
 outputs:
-  g.c.out:
+  g_c_out:
     outputSource: clean_g/output_matrix
     type: File
-  p.c.out:
+  p_c_out:
     outputSource: clean_p/output_matrix
     type: File
-  p.t.out:
+  p_t_out:
     outputSource: clean_pt/output_matrix
     type: File
-  gg.knf.out:
+  gg_knf_out:
     outputSource: ggkn_fetch/output_file
     type: File
-  gp.out:
+  gp_out:
     outputSource: gp_netboot/top100genes_matrix
     type: File
-  go.knf.out:
+  go_knf_out:
     outputSource: gokn_fetch/output_file
     type: File
-  go.gsc.out:
+  go_gsc_out:
     outputSource: gsc_go_drawr/enrichment_scores
     type: File
-  other.gsc.out:
-    outputSource: enrichments/gsc_drawr.out
+  other_gsc_out:
+    outputSource: enrichments/gsc_drawr_out
     type:
       type: array
       items: File
-  sc.ce.out:
-    outputSource: clustering_wf/ce.table.out
+  sc_ce_out:
+    outputSource: clustering_wf/ce_table_out
     type:
       type: array
       items: File
-  sc.map.out:
-    outputSource: clustering_wf/sc.clus_map.out
+  sc_map_out:
+    outputSource: clustering_wf/sc_clus_map_out
     type:
       type: array
       items: File
-  sc.ce.top10:
+  sc_ce_top10:
     outputSource: top10_gather/output_file
     type: File
