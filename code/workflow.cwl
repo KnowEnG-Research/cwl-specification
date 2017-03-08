@@ -47,7 +47,9 @@ inputs:
       items: int
 
 steps:
-  clean_g:
+  - id: clean_g
+    label: "Genomic Spread Cleaner"
+    doc: "Transforms user spreadsheet in preparation for KN analytics by removing noise, mapping gene names, and extracting metadata statistics"
     run: sspp_runner.cwl
     in:
       input_file: genomic_file
@@ -58,7 +60,9 @@ steps:
       taxon: taxon
     out:
       - output_matrix
-  clean_p:
+  - id: clean_p
+    label: "SC Pheno Spread Cleaner"
+    doc: "Transforms user spreadsheet in preparation for KN analytics by removing noise, mapping gene names, and extracting metadata statistics"
     run: sspp_runner.cwl
     in:
       input_file: pheno_file
@@ -69,7 +73,9 @@ steps:
       taxon: taxon
     out:
       - output_matrix
-  clean_pt:
+  - id: clean_pt
+    label: "GP Pheno Spread Cleaner"
+    doc: "Transforms user spreadsheet in preparation for KN analytics by removing noise, mapping gene names, and extracting metadata statistics"
     run: sspp_runner.cwl
     in:
       input_file: pheno_file
@@ -80,7 +86,9 @@ steps:
       taxon: taxon
     out:
       - output_matrix
-  ggkn_fetch:
+  - id: ggkn_fetch
+    label: "GG KnowNet Fetcher"
+    doc: "Retrieve appropriate subnetwork from KnowEnG Knowledge Network from AWS S3 storage"
     run: knf_runner.cwl
     in:
       network_type:
@@ -91,7 +99,9 @@ steps:
         valueFrom: "gg_knf_out"
     out:
       - output_file
-  gp_netboot:
+  - id: gp_netboot
+    label: ProGENI
+    doc: "Network-guided gene prioritization method implementation by KnowEnG that ranks gene measurements by their correlation to observed phenotypes."
     run: gp_runner.cwl
     in:
       network_file: ggkn_fetch/output_file
@@ -101,7 +111,9 @@ steps:
       correlation_method: correlation_method
     out:
       - top100genes_matrix
-  gokn_fetch:
+  - id: gokn_fetch
+    label: "GO KnowNet Fetcher"
+    doc: "Retrieve appropriate subnetwork from KnowEnG Knowledge Network from AWS S3 storage"
     run: knf_runner.cwl
     in:
       network_type:
@@ -113,7 +125,9 @@ steps:
         valueFrom: "go_knf_out"
     out:
       - output_file
-  gsc_go_drawr:
+  - id: gsc_go_drawr
+    label: "GO Gene Set Char"
+    doc: "Network-guided gene set characterization method implementation by KnowEnG that relates public gene sets to user gene sets"
     run: gsc_runner.cwl
     in:
       gg_network_file: ggkn_fetch/output_file
@@ -123,7 +137,9 @@ steps:
         valueFrom: "DRaWR"
     out:
       - enrichment_scores
-  enrichments:
+  - id: enrichments
+    label: "Scatter Gene Set Char"
+    doc: "Network-guided gene set characterization method implementation by KnowEnG that relates public gene sets to user gene sets"
     run: workflow.gsc.cwl
     scatter: pg_edge_type
     in:
@@ -135,7 +151,9 @@ steps:
         valueFrom: "DRaWR"
     out:
       - gsc_drawr_out
-  clustering_wf:
+  - id: clustering_wf
+    label: "Scatter SampClus w/ Eval"
+    doc: "Network-guided stratification of genomic subtypes."
     run: workflow.sc.cwl
     scatter: num_clusters
     in:
@@ -147,7 +165,9 @@ steps:
     out:
       - sc_clus_map_out
       - ce_table_out
-  top10_gather:
+  - id: top10_gather
+    label: "Top10 Results"
+    doc: "Get the 10 rows with the smallest value in the selected column"
     run: top10_runner.cwl
     in:
       infile_array: clustering_wf/ce_table_out
@@ -159,42 +179,64 @@ steps:
       - output_file
 
 outputs:
-  g_c_out:
+  - id: g_c_out
     outputSource: clean_g/output_matrix
+    label: "Cleaned Genomic Spread"
+    doc: "Spreadsheet with columns and row headers"  
     type: File
-  p_c_out:
+  - id: p_c_out
     outputSource: clean_p/output_matrix
+    label: "Cleaned Pheno Spread"
+    doc: "Spreadsheet with columns and row headers"  
     type: File
-  p_t_out:
+  - id: p_t_out
+    label: "Transposed Pheno Spread"
+    doc: "Spreadsheet with columns and row headers"  
     outputSource: clean_pt/output_matrix
     type: File
-  gg_knf_out:
+  - id: gg_knf_out
+    label: "GG KnowNet Edges"
+    doc: "4 column format for subnetwork for single edge type and species"
     outputSource: ggkn_fetch/output_file
     type: File
-  gp_out:
+  - id: gp_out
+    label: "GP top100 Genes"
+    doc: "Membership spreadsheet with phenotype columns and gene rows"
     outputSource: gp_netboot/top100genes_matrix
     type: File
-  go_knf_out:
+  - id: go_knf_out
+    label: "GO KnowNet Edges"
+    doc: "4 column format for subnetwork for single edge type and species"
     outputSource: gokn_fetch/output_file
     type: File
-  go_gsc_out:
+  - id: go_gsc_out
+    label: "GO GSC Scores"
+    doc: "Edge format file with first three columns (user gene set, public gene set, score)"
     outputSource: gsc_go_drawr/enrichment_scores
     type: File
-  other_gsc_out:
+  - id: other_gsc_out
+    label: "GSC Scores"
+    doc: "Edge format file with first three columns (user gene set, public gene set, score)"
     outputSource: enrichments/gsc_drawr_out
     type:
       type: array
       items: File
-  sc_ce_out:
+  - id: sc_ce_out
+    label: "Cluster Eval Results"
+    doc: "Table with results of statistical tests between cluster membership and phenoyptes"  
     outputSource: clustering_wf/ce_table_out
     type:
       type: array
       items: File
-  sc_map_out:
+  - id: sc_map_out
+    label: "Cluster Membership"
+    doc: "Assignment of samples to clusters"
     outputSource: clustering_wf/sc_clus_map_out
     type:
       type: array
       items: File
-  sc_ce_top10:
+  - id: sc_ce_top10
+    label: "top10 clusters~pheno"
+    doc: "file with 10 rows with the smallest value from the selected column"
     outputSource: top10_gather/output_file
     type: File
